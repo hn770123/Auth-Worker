@@ -1,0 +1,8 @@
+name = "auth-proxy-worker"
+main = "src/index.js"
+compatibility_date = "2023-10-02"
+
+[vars]
+# RECAPTCHA_SECRET_KEY はSecretsで管理するためここには記述しないが、
+# 開発環境用にダミーを入れる場合は以下のようにする
+# RECAPTCHA_SECRET_KEY = "dummy_secret"
