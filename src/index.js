@@ -1,3 +1,5 @@
+import { html } from './test-page.js';
+
 /**
  * 認証プロキシWorkerモジュール
  * Google reCAPTCHAを使用して人間かどうかを判定します。
@@ -15,6 +17,13 @@ export default {
    * @returns {Promise<Response>} レスポンスオブジェクト
    */
   async fetch(request, env, ctx) {
+    // 日本語コメント: GETリクエストの場合はテストページを返します
+    if (request.method === 'GET') {
+      return new Response(html, {
+        headers: { 'Content-Type': 'text/html' },
+      });
+    }
+
     // 日本語コメント: リクエストメソッドがPOSTであることを確認します
     if (request.method !== 'POST') {
       return new Response('Method Not Allowed', { status: 405 });

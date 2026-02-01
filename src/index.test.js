@@ -20,10 +20,15 @@ describe('Auth Proxy Worker', () => {
     vi.restoreAllMocks();
   });
 
-  it('should return 405 for non-POST requests', async () => {
+  it('should return 200 and HTML for GET requests', async () => {
     const request = new Request('http://localhost', { method: 'GET' });
     const response = await worker.fetch(request, env, ctx);
-    expect(response.status).toBe(405);
+    expect(response.status).toBe(200);
+    const contentType = response.headers.get('content-type');
+    expect(contentType).toBe('text/html');
+    const text = await response.text();
+    expect(text).toContain('<!DOCTYPE html>');
+    expect(text).toContain('認証プロキシ テスト');
   });
 
   it('should return 400 if token is missing', async () => {
